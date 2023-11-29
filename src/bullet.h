@@ -6,7 +6,7 @@
 
 typedef struct bullet_s
 {
-  int x, y;
+  float x, y;
   int speed;
   int damage;
   double angle;
@@ -14,7 +14,7 @@ typedef struct bullet_s
 } bullet_t;
 
 void
-bullets_fire(int x, int y, double angle);
+bullets_fire(float x, float y, double angle);
 
 void
 bullets_update(float deltatime);

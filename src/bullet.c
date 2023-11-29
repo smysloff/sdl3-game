@@ -2,7 +2,7 @@
 
 const size_t MAX_BULLETS   = 6;
 const int    BULLET_DAMAGE = 50;
-const int    BULLET_SPEED  = 2048;
+const int    BULLET_SPEED  = 256;
 
 extern const int WINDOW_WIDTH;
 extern const int WINDOW_HEIGHT;
@@ -12,7 +12,7 @@ extern game_t game;
 bullet_t bullets[6];
 
 void
-bullets_fire(int x, int y, double angle)
+bullets_fire(float x, float y, double angle)
 {
    for (size_t i = 0; i < MAX_BULLETS; ++i)
    {
@@ -34,9 +34,9 @@ bullets_update(float deltatime)
   {
     if (!bullets[i].fired) continue;
 
-    bullets[i].x = (int) bullets[i].x
+    bullets[i].x = bullets[i].x
       + deltatime * BULLET_SPEED * cos(bullets[i].angle);
-    bullets[i].y = (int) bullets[i].y
+    bullets[i].y = bullets[i].y
       + deltatime * BULLET_SPEED * sin(bullets[i].angle);
 
     if (
@@ -51,14 +51,18 @@ bullets_update(float deltatime)
 void
 bullets_render(void)
 {
-  SDL_SetRenderDrawColor(game.renderer,
-    0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+  SDL_SetRenderDrawColor(game.renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
 
   for (size_t i = 0; i < MAX_BULLETS; ++i)
   {
     if (!bullets[i].fired) continue;
 
-    SDL_FRect rect = { bullets[i].x - 1, bullets[i].y - 1, 3, 3 };
+    SDL_FRect rect = {
+      (int) bullets[i].x - 1,
+      (int) bullets[i].y - 1,
+      3,
+      3
+    };
     SDL_RenderFillRect(game.renderer, &rect);
   }
 }

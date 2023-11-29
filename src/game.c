@@ -74,8 +74,8 @@ mouse_button_down_handler(SDL_MouseButtonEvent event)
   if (event.button == SDL_BUTTON_LEFT)
   {
     bullets_fire(
-      player.x + (int) (player.w / 2),
-      player.y + (int) (player.h / 2),
+      player.x + player.w / 2.,
+      player.y + player.h / 2.,
       player.angle
     );
   }
@@ -168,5 +168,5 @@ get_deltatime(void)
 static void
 mouse_motion_handler(SDL_MouseMotionEvent motion)
 {
-  player.angle = atan2(motion.y - (int) player.y, motion.x - (int) player.x);
+  player.angle = atan2(motion.y - player.y, motion.x - player.x);
 }

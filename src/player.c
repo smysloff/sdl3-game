@@ -45,14 +45,29 @@ player_update(float deltatime)
 }
 
 static void
+click_render(void)
+{
+  float x, y;
+  float cx, cy;
+
+  cx = player.x + player.w / 2.;
+  cy = player.y + player.h / 2.;
+
+  SDL_GetMouseState(&x, &y);
+
+  SDL_SetRenderDrawColor(game.renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+  SDL_RenderLine(game.renderer, cx, cy, x, y);
+}
+
+static void
 view_render(void)
 {
   const int length = PLAYER_VIEW_LENGTH;
 
-  int cx = (int) player.x + player.w / 2;
-  int cy = (int) player.y + player.h / 2;
-  int x = cx + (int) (length * cos(player.angle));
-  int y = cy + (int) (length * sin(player.angle));
+  float cx = player.x + player.w / 2.;
+  float cy = player.y + player.h / 2.;
+  float x  = cx + length * cos(player.angle);
+  float y  = cy + length * sin(player.angle);
 
   SDL_SetRenderDrawColor(game.renderer,
     COLOR_GREEN.r, COLOR_GREEN.g, COLOR_GREEN.b,
@@ -64,6 +79,7 @@ view_render(void)
 void
 player_render(void)
 {
+  click_render();
   view_render();
   character_render(&player);
 }
